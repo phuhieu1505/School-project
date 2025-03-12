@@ -24,7 +24,7 @@ class Stream_note extends StatelessWidget {
               return Dismissible(
                   key: UniqueKey(),
                   onDismissed: (direction) {
-                    Firestore_Datasource().delet_note(note.id);
+                    Firestore_Datasource().delete_note(note.id);
                   },
                   child: Task_Widget(note));
             },

@@ -37,6 +37,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(title: Text("Sign Up")),
       backgroundColor: backgroundColors,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -69,7 +70,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            "Don you have an account?",
+            "Already have an account?",
             style: TextStyle(color: Colors.grey[700], fontSize: 14),
           ),
           SizedBox(width: 5),

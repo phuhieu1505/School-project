@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:project/const/colors.dart';
 import 'package:project/screen/add_note_screen.dart';
 import 'package:project/widgets/stream_note.dart';
+import 'package:project/screen/login.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -18,6 +19,17 @@ class _Home_ScreenState extends State<Home_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColors,
+      appBar: AppBar(
+        title: Text("Home"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _logout(context);
+            },
+          ),
+        ],
+      ),
       floatingActionButton: Visibility(
         visible: show,
         child: FloatingActionButton(
@@ -60,6 +72,14 @@ class _Home_ScreenState extends State<Home_Screen> {
           ),
         ),
       ),
+    );
+  }
+  void _logout(BuildContext context) {
+    // Điều hướng về màn hình đăng nhập và xóa toàn bộ stack để ngăn người dùng quay lại màn hình home
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LogIN_Screen(() {})),
+          (route) => false,
     );
   }
 }

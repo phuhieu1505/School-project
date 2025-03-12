@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/const/colors.dart';
 import 'package:project/data/auth_data.dart';
+import 'package:project/screen/sign_up.dart';
 
 class LogIN_Screen extends StatefulWidget {
   final VoidCallback show;
@@ -67,7 +68,16 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
           ),
           SizedBox(width: 5),
           GestureDetector(
-            onTap: widget.show,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignUp_Screen(() {
+                    Navigator.pop(context); // Quay lại màn hình Login
+                  }),
+                ),
+              );
+            },
             child: Text(
               'Sign UP',
               style: TextStyle(
@@ -86,7 +96,7 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: GestureDetector(
         onTap: () {
-          AuthenticationRemote().login(email.text, password.text);
+          AuthenticationRemote().login(email.text, password.text,context);
         },
         child: Container(
           alignment: Alignment.center,

@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/auth/main_page.dart';
 import 'package:project/firebase_options.dart';
+import 'package:project/screen/home.dart';
+import 'package:project/screen/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +14,13 @@ void main() async {
     );
   }
 
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    initialRoute: '/',
+    routes: {
+      '/': (context) => LogIN_Screen(() {}),
+      '/home': (context) => Home_Screen(),
+    },
+  ));
 }
 
 class MyApp extends StatelessWidget {
