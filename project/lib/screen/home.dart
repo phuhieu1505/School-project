@@ -45,9 +45,9 @@ class _Home_ScreenState extends State<Home_Screen> {
             }
             return true;
           },
-          child: Column(
+            child: Column(
             children: [
-              Stream_note(false),
+               Stream_note(false),
               Text(
                 'isDone',
                 style: TextStyle(
@@ -55,7 +55,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                     color: Colors.grey.shade500,
                     fontWeight: FontWeight.bold),
               ),
-              Stream_note(true),
+            Stream_note(true),
             ],
           ),
         ),

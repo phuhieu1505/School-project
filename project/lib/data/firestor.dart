@@ -33,7 +33,7 @@ class Firestore_Datasource {
           .set({
         'id': uuid,
         'subtitle': subtitle,
-        'isDon': false,
+        'isDone': false,
         'image': image,
         'time': '${data.hour}:${data.minute}',
         'title': title,
@@ -55,7 +55,7 @@ class Firestore_Datasource {
           data['time'],
           data['image'],
           data['title'],
-          data['isDon'],
+          data['isDone'],
         );
       }).toList();
       return notesList;
@@ -70,18 +70,18 @@ class Firestore_Datasource {
         .collection('users')
         .doc(_auth.currentUser!.uid)
         .collection('notes')
-        .where('isDon', isEqualTo: isDone)
+        .where('isDone', isEqualTo: isDone)
         .snapshots();
   }
 
-  Future<bool> isdone(String uuid, bool isDon) async {
+  Future<bool> isdone(String uuid, bool isDone) async {
     try {
       await _firestore
           .collection('users')
           .doc(_auth.currentUser!.uid)
           .collection('notes')
           .doc(uuid)
-          .update({'isDon': isDon});
+          .update({'isDone': isDone});
       return true;
     } catch (e) {
       print(e);
@@ -111,7 +111,7 @@ class Firestore_Datasource {
     }
   }
 
-  Future<bool> delet_note(String uuid) async {
+  Future<bool> delete_note(String uuid) async {
     try {
       await _firestore
           .collection('users')
