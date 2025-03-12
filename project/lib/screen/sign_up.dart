@@ -17,11 +17,13 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
 
   final email = TextEditingController();
   final password = TextEditingController();
-  final PasswordConfirm = TextEditingController();
+  final passwordConfirm = TextEditingController();
+
+  bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _focusNode1.addListener(() {
       setState(() {});
@@ -37,7 +39,6 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text("Sign Up")),
       backgroundColor: backgroundColors,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -46,12 +47,21 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
               SizedBox(height: 20),
               image(),
               SizedBox(height: 50),
-              textfield(email, _focusNode1, 'Email', Icons.email),
+              textfield(email, _focusNode1, 'Email', Icons.email, false, null),
               SizedBox(height: 10),
-              textfield(password, _focusNode2, 'Password', Icons.password),
+              textfield(password, _focusNode2, 'Password', Icons.password,
+                  _isPasswordVisible, () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  }),
               SizedBox(height: 10),
-              textfield(PasswordConfirm, _focusNode3, 'PasswordConfirm',
-                  Icons.password),
+              textfield(passwordConfirm, _focusNode3, 'Confirm Password',
+                  Icons.password, _isConfirmPasswordVisible, () {
+                    setState(() {
+                      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                    });
+                  }),
               SizedBox(height: 8),
               account(),
               SizedBox(height: 20),
@@ -95,7 +105,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
       child: GestureDetector(
         onTap: () {
           AuthenticationRemote()
-              .register(email.text, password.text, PasswordConfirm.text);
+              .register(email.text, password.text, passwordConfirm.text);
         },
         child: Container(
           alignment: Alignment.center,
@@ -118,8 +128,8 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     );
   }
 
-  Widget textfield(TextEditingController _controller, FocusNode _focusNode,
-      String typeName, IconData iconss) {
+  Widget textfield(TextEditingController controller, FocusNode focusNode,
+      String hintText, IconData icon, bool isPasswordVisible, VoidCallback? toggleVisibility) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
@@ -128,31 +138,41 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
-          controller: _controller,
-          focusNode: _focusNode,
+          controller: controller,
+          focusNode: focusNode,
+          obscureText: toggleVisibility != null ? !isPasswordVisible : false,
           style: TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-              prefixIcon: Icon(
-                iconss,
-                color: _focusNode.hasFocus ? custom_green : Color(0xffc5c5c5),
+            prefixIcon: Icon(
+              icon,
+              color: focusNode.hasFocus ? custom_green : Color(0xffc5c5c5),
+            ),
+            suffixIcon: toggleVisibility != null
+                ? IconButton(
+              icon: Icon(
+                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
               ),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              hintText: typeName,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: Color(0xffc5c5c5),
-                  width: 2.0,
-                ),
+              onPressed: toggleVisibility,
+            )
+                : null,
+            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            hintText: hintText,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Color(0xffc5c5c5),
+                width: 2.0,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: custom_green,
-                  width: 2.0,
-                ),
-              )),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: custom_green,
+                width: 2.0,
+              ),
+            ),
+          ),
         ),
       ),
     );

@@ -15,7 +15,7 @@ class Task_Widget extends StatefulWidget {
 class _Task_WidgetState extends State<Task_Widget> {
   @override
   Widget build(BuildContext context) {
-    bool isDone = widget._note.isDon;
+    bool isDone = widget._note.isDone;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Container(
@@ -64,7 +64,7 @@ class _Task_WidgetState extends State<Task_Widget> {
                               isDone = !isDone;
                             });
                             Firestore_Datasource()
-                                .isdone(widget._note.id, isDone);
+                                .isDone(widget._note.id, isDone);
                           },
                         )
                       ],

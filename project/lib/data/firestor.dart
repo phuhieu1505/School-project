@@ -16,12 +16,12 @@ class Firestore_Datasource {
           .set({"id": _auth.currentUser!.uid, "email": email});
       return true;
     } catch (e) {
-      print(e);
-      return true;
+      debugPrint("Error in createUser: ${e.toString()}");
+      return false;
     }
   }
 
-  Future<bool> AddNote(String subtitle, String title, int image) async {
+  Future<bool> addNote(String subtitle, String title, int image) async {
     try {
       var uuid = Uuid().v4();
       DateTime data = new DateTime.now();
@@ -40,8 +40,8 @@ class Firestore_Datasource {
       });
       return true;
     } catch (e) {
-      print(e);
-      return true;
+      debugPrint("Error in addNote: ${e.toString()}");
+      return false;
     }
   }
 
@@ -60,7 +60,7 @@ class Firestore_Datasource {
       }).toList();
       return notesList;
     } catch (e) {
-      print(e);
+      debugPrint("Error in getNotes: ${e.toString()}");
       return [];
     }
   }
@@ -74,7 +74,7 @@ class Firestore_Datasource {
         .snapshots();
   }
 
-  Future<bool> isdone(String uuid, bool isDone) async {
+  Future<bool> isDone(String uuid, bool isDone) async {
     try {
       await _firestore
           .collection('users')
@@ -84,13 +84,12 @@ class Firestore_Datasource {
           .update({'isDone': isDone});
       return true;
     } catch (e) {
-      print(e);
-      return true;
+      debugPrint("Error in updateNoteStatus: ${e.toString()}");
+      return false;
     }
   }
 
-  Future<bool> Update_Note(
-      String uuid, int image, String title, String subtitle) async {
+  Future<bool> updateNote(String uuid, int image, String title, String subtitle) async {
     try {
       DateTime data = new DateTime.now();
       await _firestore
@@ -106,12 +105,12 @@ class Firestore_Datasource {
       });
       return true;
     } catch (e) {
-      print(e);
-      return true;
+      debugPrint("Error in updateNote: ${e.toString()}");
+      return false;
     }
   }
 
-  Future<bool> delete_note(String uuid) async {
+  Future<bool> deleteNote(String uuid) async {
     try {
       await _firestore
           .collection('users')
@@ -121,8 +120,8 @@ class Firestore_Datasource {
           .delete();
       return true;
     } catch (e) {
-      print(e);
-      return true;
+      debugPrint("Error in deleteNote: ${e.toString()}");
+      return false;
     }
   }
 }

@@ -37,7 +37,7 @@ class _Edit_ScreenState extends State<Edit_Screen> {
             SizedBox(height: 20),
             subtite_wedgite(),
             SizedBox(height: 20),
-            imagess(),
+            images(),
             SizedBox(height: 20),
             button()
           ],
@@ -56,11 +56,27 @@ class _Edit_ScreenState extends State<Edit_Screen> {
             minimumSize: Size(170, 48),
           ),
           onPressed: () {
-            Firestore_Datasource().Update_Note(
-                widget._note.id, indexx, title!.text, subtitle!.text);
-            Navigator.pop(context);
+            if (title!.text.isEmpty || subtitle!.text.isEmpty) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Error'),
+                  content: Text('Title and subtitle cannot be empty.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              Firestore_Datasource().updateNote(
+                  widget._note.id, indexx, title!.text, subtitle!.text);
+              Navigator.pop(context);
+            }
           },
-          child: Text('add task'),
+          child: Text('Update'),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -76,7 +92,7 @@ class _Edit_ScreenState extends State<Edit_Screen> {
     );
   }
 
-  Container imagess() {
+  Container images() {
     return Container(
       height: 180,
       child: ListView.builder(

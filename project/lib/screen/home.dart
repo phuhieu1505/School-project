@@ -57,25 +57,35 @@ class _Home_ScreenState extends State<Home_Screen> {
             }
             return true;
           },
-            child: Column(
+          child: Column(
             children: [
-               Stream_note(false),
-              Text(
-                'isDone',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey.shade500,
-                    fontWeight: FontWeight.bold),
+              Stream_note(false),
+              SizedBox(height: 12), // Thêm khoảng cách
+              Divider(thickness: 1.5, color: Colors.grey.shade400),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                color: Colors.grey.shade200, // Làm nổi bật phần isDone
+                width: double.infinity,
+                child: Text(
+                  'Completed Notes',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            Stream_note(true),
+              SizedBox(height: 8), // Thêm khoảng cách
+              Stream_note(true),
             ],
           ),
         ),
       ),
     );
   }
+
   void _logout(BuildContext context) {
-    // Điều hướng về màn hình đăng nhập và xóa toàn bộ stack để ngăn người dùng quay lại màn hình home
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => LogIN_Screen(() {})),

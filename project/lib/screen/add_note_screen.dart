@@ -48,10 +48,26 @@ class _Add_creenState extends State<Add_creen> {
             minimumSize: Size(170, 48),
           ),
           onPressed: () {
-            Firestore_Datasource().AddNote(subtitle.text, title.text, indexx);
-            Navigator.pop(context);
+            if (title.text.isEmpty || subtitle.text.isEmpty) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Error'),
+                  content: Text('Title and subtitle cannot be empty.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              Firestore_Datasource().addNote(subtitle.text, title.text, indexx);
+              Navigator.pop(context);
+            }
           },
-          child: Text('add task'),
+          child: Text('Add'),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(

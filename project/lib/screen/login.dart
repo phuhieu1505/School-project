@@ -18,14 +18,14 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
   final email = TextEditingController();
   final password = TextEditingController();
 
+  bool _obscurePassword = true; // Trạng thái ẩn/hiện mật khẩu
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _focusNode1.addListener(() {
       setState(() {});
     });
-    super.initState();
     _focusNode2.addListener(() {
       setState(() {});
     });
@@ -42,9 +42,9 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
               SizedBox(height: 20),
               image(),
               SizedBox(height: 50),
-              textfield(email, _focusNode1, 'Email', Icons.email),
+              textfield(email, _focusNode1, 'Email', Icons.email, false),
               SizedBox(height: 10),
-              textfield(password, _focusNode2, 'Password', Icons.password),
+              textfield(password, _focusNode2, 'Password', Icons.lock, true),
               SizedBox(height: 8),
               account(),
               SizedBox(height: 20),
@@ -73,7 +73,7 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => SignUp_Screen(() {
-                    Navigator.pop(context); // Quay lại màn hình Login
+                    Navigator.pop(context);
                   }),
                 ),
               );
@@ -96,7 +96,7 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: GestureDetector(
         onTap: () {
-          AuthenticationRemote().login(email.text, password.text,context);
+          AuthenticationRemote().login(email.text, password.text, context);
         },
         child: Container(
           alignment: Alignment.center,
@@ -120,7 +120,7 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
   }
 
   Widget textfield(TextEditingController _controller, FocusNode _focusNode,
-      String typeName, IconData iconss) {
+      String typeName, IconData iconss, bool isPassword) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
@@ -131,29 +131,43 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
         child: TextField(
           controller: _controller,
           focusNode: _focusNode,
+          obscureText: isPassword ? _obscurePassword : false, // Ẩn nếu là password
           style: TextStyle(fontSize: 18, color: Colors.black),
           decoration: InputDecoration(
-              prefixIcon: Icon(
-                iconss,
-                color: _focusNode.hasFocus ? custom_green : Color(0xffc5c5c5),
+            prefixIcon: Icon(
+              iconss,
+              color: _focusNode.hasFocus ? custom_green : Color(0xffc5c5c5),
+            ),
+            suffixIcon: isPassword
+                ? IconButton(
+              icon: Icon(
+                _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                color: Colors.grey,
               ),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              hintText: typeName,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: Color(0xffc5c5c5),
-                  width: 2.0,
-                ),
+              onPressed: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword;
+                });
+              },
+            )
+                : null, // Chỉ hiển thị nút nếu là password
+            contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            hintText: typeName,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Color(0xffc5c5c5),
+                width: 2.0,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: custom_green,
-                  width: 2.0,
-                ),
-              )),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: custom_green,
+                width: 2.0,
+              ),
+            ),
+          ),
         ),
       ),
     );
