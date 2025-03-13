@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/const/colors.dart';
-import 'package:project/data/firestor.dart';
+import 'package:project/data/firestore.dart';
 
-class Add_creen extends StatefulWidget {
-  const Add_creen({super.key});
+class Add_Screen extends StatefulWidget {
+  const Add_Screen({super.key});
 
   @override
-  State<Add_creen> createState() => _Add_creenState();
+  State<Add_Screen> createState() => _Add_creenState();
 }
 
-class _Add_creenState extends State<Add_creen> {
+class _Add_creenState extends State<Add_Screen> {
   final title = TextEditingController();
   final subtitle = TextEditingController();
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/const/colors.dart';
-import 'package:project/data/firestor.dart';
+import 'package:project/data/firestore.dart';
 import 'package:project/model/notes_model.dart';
 import 'package:project/screen/edit_screen.dart';
 
@@ -38,7 +38,7 @@ class _Task_WidgetState extends State<Task_Widget> {
           child: Row(
             children: [
               // image
-              imageee(),
+              taskImages(),
               SizedBox(width: 25),
               // title and subtitle
               Expanded(
@@ -161,7 +161,7 @@ class _Task_WidgetState extends State<Task_Widget> {
     );
   }
 
-  Widget imageee() {
+  Widget taskImages() {
     return Container(
       height: 130,
       width: 100,

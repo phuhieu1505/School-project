@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project/widgets/task_widgets.dart';
-import '../data/firestor.dart';
+import '../data/firestore.dart';
 
 class Stream_note extends StatelessWidget {
   final bool done;
