@@ -44,6 +44,7 @@ dev_dependencies:
   cloud_firestore: ^4.5.0
   msh_checkbox: ^1.1.1
   uuid: ^3.0.6
+  speech_to_text: ^6.1.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -18,6 +18,7 @@ class Stream_note extends StatelessWidget {
         final noteslist = Firestore_Datasource().getNotes(snapshot);
         return ListView.builder(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),  // Ngăn cuộn độc lập
           itemCount: noteslist.length,
           itemBuilder: (context, index) {
             final note = noteslist[index];
