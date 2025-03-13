@@ -14,13 +14,15 @@ void main() async {
     );
   }
 
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => LogIN_Screen(() {}),
-      '/home': (context) => Home_Screen(),
-    },
-  ));
+  // runApp(MaterialApp(
+  //   initialRoute: '/',
+  //   routes: {
+  //     '/': (context) => LogIN_Screen(() {}),
+  //     '/home': (context) => Home_Screen(),
+  //   },
+  // ));
+  
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Main_Page(),
+      routes: {
+        '/login': (context) => LogIN_Screen(() {}),
+        '/home': (context) => Home_Screen(),
+      },
     );
   }
 }

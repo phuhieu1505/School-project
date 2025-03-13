@@ -153,6 +153,10 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
                 : null, // Chỉ hiển thị nút nếu là password
             contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             hintText: typeName,
+            hintStyle: TextStyle(
+              color: Colors.grey.shade400, // Màu nhạt hơn cho hintText
+              fontSize: 16,
+            ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
@@ -182,7 +186,7 @@ class _LogIN_ScreenState extends State<LogIN_Screen> {
         decoration: BoxDecoration(
           color: backgroundColors,
           image: DecorationImage(
-            image: AssetImage('images/7.png'),
+            image: AssetImage('images/login.png'),
             fit: BoxFit.fitWidth,
           ),
         ),
