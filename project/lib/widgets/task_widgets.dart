@@ -4,8 +4,11 @@ import 'package:project/data/firestore.dart';
 import 'package:project/model/notes_model.dart';
 import 'package:project/screen/edit_screen.dart';
 
+import '../screen/task_detail_screen.dart';
+
 class Task_Widget extends StatefulWidget {
   Note _note;
+
   Task_Widget(this._note, {super.key});
 
   @override
@@ -18,70 +21,75 @@ class _Task_WidgetState extends State<Task_Widget> {
     bool isDone = widget._note.isDone;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Container(
-        width: double.infinity,
-        height: 130,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            children: [
-              // image
-              taskImages(),
-              SizedBox(width: 25),
-              // title and subtitle
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget._note.title,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Checkbox(
-                          activeColor: custom_green,
-                          value: isDone,
-                          onChanged: (value) {
-                            setState(() {
-                              isDone = !isDone;
-                            });
-                            Firestore_Datasource()
-                                .isDone(widget._note.id, isDone);
-                          },
-                        )
-                      ],
-                    ),
-                    Text(
-                      widget._note.subtitle,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade400),
-                    ),
-                    Spacer(),
-                    edit_time()
-                  ],
-                ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TaskDetailScreen(note: widget._note),
+          ));
+        },
+        child: Container(
+          width: double.infinity,
+          height: 130,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 2),
               ),
             ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                taskImages(),
+                SizedBox(width: 25),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            widget._note.title,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Checkbox(
+                            activeColor: custom_green,
+                            value: isDone,
+                            onChanged: (value) {
+                              setState(() {
+                                isDone = !isDone;
+                              });
+                              Firestore_Datasource()
+                                  .isDone(widget._note.id, isDone);
+                            },
+                          )
+                        ],
+                      ),
+                      Text(
+                        widget._note.subtitle,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey.shade400),
+                      ),
+                      Spacer(),
+                      edit_time()
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
