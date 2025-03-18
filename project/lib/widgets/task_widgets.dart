@@ -4,6 +4,7 @@ import 'package:project/data/firestore.dart';
 import 'package:project/model/notes_model.dart';
 import 'package:project/screen/edit_screen.dart';
 
+import '../screen/notification_time_screen.dart';
 import '../screen/task_detail_screen.dart';
 
 class Task_Widget extends StatefulWidget {
@@ -101,31 +102,39 @@ class _Task_WidgetState extends State<Task_Widget> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
-          Container(
-            width: 90,
-            height: 28,
-            decoration: BoxDecoration(
-              color: custom_green,
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 6,
+          // Nút hiển thị thời gian, nhấn vào để điều hướng đến màn hình cài đặt thông báo
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => NotificationTimeScreen(note: widget._note), // Điều hướng tới screen mới
+              ));
+            },
+            child: Container(
+              width: 90,
+              height: 28,
+              decoration: BoxDecoration(
+                color: custom_green,
+                borderRadius: BorderRadius.circular(18),
               ),
-              child: Row(
-                children: [
-                  Image.asset('images/icon_time.png'),
-                  SizedBox(width: 10),
-                  Text(
-                    widget._note.time,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                child: Row(
+                  children: [
+                    Image.asset('images/icon_time.png'),
+                    SizedBox(width: 10),
+                    Text(
+                      widget._note.time,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -168,7 +177,6 @@ class _Task_WidgetState extends State<Task_Widget> {
       ),
     );
   }
-
   Widget taskImages() {
     return Container(
       height: 130,
