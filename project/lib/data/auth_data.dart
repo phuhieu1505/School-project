@@ -27,15 +27,37 @@ class AuthenticationRemote extends AuthenticationDatasource {
   }
 
   @override
-  Future<void> register(
-      String email, String password, String PasswordConfirm) async {
-    if (PasswordConfirm == password) {
+  Future<String> register(String email, String password, String passwordConfirm) async {
+    if (email.isEmpty || password.isEmpty || passwordConfirm.isEmpty) {
+      return "Please fill in all fields!";
+    }
+
+    if (password != passwordConfirm) {
+      return "Passwords do not match!";
+    }
+
+    try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
           email: email.trim(), password: password.trim())
           .then((value) {
         Firestore_Datasource().CreateUser(email);
       });
+
+      return "success"; // Thành công
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        return "Email is already in use!";
+      } else if (e.code == 'weak-password') {
+        return "Password is too weak!";
+      } else if (e.code == 'invalid-email') {
+        return "Invalid email format!";
+      } else {
+        return "Registration failed. Please try again!";
+      }
+    } catch (e) {
+      return "Error: ${e.toString()}";
     }
   }
 }

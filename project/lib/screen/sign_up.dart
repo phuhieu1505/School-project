@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/const/colors.dart';
 import 'package:project/data/auth_data.dart';
+import 'package:project/screen/home.dart';
 
 class SignUp_Screen extends StatefulWidget {
   final VoidCallback show;
@@ -103,9 +104,23 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: GestureDetector(
-        onTap: () {
-          AuthenticationRemote()
+        onTap: () async {
+          String resultMessage = await AuthenticationRemote()
               .register(email.text, password.text, passwordConfirm.text);
+
+          if (resultMessage == 'success') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Sign up successful!")),
+            );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Home_Screen()),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(resultMessage)),
+            );
+          }
         },
         child: Container(
           alignment: Alignment.center,
@@ -126,9 +141,7 @@ class _SignUp_ScreenState extends State<SignUp_Screen> {
         ),
       ),
     );
-  }
-
-  Widget textfield(TextEditingController controller, FocusNode focusNode,
+  }  Widget textfield(TextEditingController controller, FocusNode focusNode,
       String hintText, IconData icon, bool isPasswordVisible, VoidCallback? toggleVisibility) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
